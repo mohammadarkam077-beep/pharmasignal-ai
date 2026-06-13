@@ -4,6 +4,6 @@
   "description": "AI-powered pharma intelligence console built by Md Arkam",
   "private": true,
   "engines": {
-    "node": "18.x"
+    "node": "24.x"
   }
 }
