@@ -1,0 +1,9 @@
+{
+  "name": "pharmasignal-ai",
+  "version": "2.0.0",
+  "description": "AI-powered pharma intelligence console built by Md Arkam",
+  "private": true,
+  "engines": {
+    "node": "18.x"
+  }
+}
