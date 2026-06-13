@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PharmaSignal AI — Intelligence Console</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap');
+
+  :root {
+    --ink:     #0A0F1E;
+    --paper:   #F7F9FC;
+    --mid:     #E8EDF5;
+    --muted:   #8892A4;
+    --accent:  #0057FF;
+    --green:   #00C9A7;
+    --warn:    #FF6B35;
+    --mono:    'IBM Plex Mono', monospace;
+    --sans:    'IBM Plex Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--ink);
+    color: var(--paper);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    border-bottom: 1px solid #1E2740;
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #080D1A;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .logo { width: 32px; height: 32px; background: var(--accent); border-radius: 6px; display: grid; place-items: center; font-family: var(--mono); font-weight: 600; font-size: 15px; color: #fff; flex-shrink: 0; }
+  .logo-text { font-size: 15px; font-weight: 600; }
+  .logo-sub  { font-size: 11px; color: var(--muted); font-family: var(--mono); }
+  .badge { margin-left: auto; font-family: var(--mono); font-size: 10px; color: var(--green); border: 1px solid var(--green); padding: 3px 10px; border-radius: 20px; letter-spacing: 0.06em; }
+
+  .shell {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    flex: 1;
+  }
+
+  aside {
+    background: #0D1426;
+    border-right: 1px solid #1E2740;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    overflow-y: auto;
+    max-height: calc(100vh - 65px);
+    position: sticky;
+    top: 65px;
+  }
+
+  .sec-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+
+  .type-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .type-btn {
+    background: #141B2D; border: 1px solid #253050; border-radius: 8px;
+    padding: 10px 8px; cursor: pointer; text-align: center; transition: all 0.15s;
+    color: var(--paper); font-family: var(--sans);
+  }
+  .type-btn:hover { border-color: var(--accent); }
+  .type-btn.active { border-color: var(--accent); background: #0D2260; }
+  .type-btn .ico { font-size: 20px; display: block; margin-bottom: 4px; }
+  .type-btn .tn  { font-size: 11px; font-weight: 600; display: block; }
+  .type-btn .td  { font-size: 10px; color: var(--muted); display: block; margin-top: 2px; }
+
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: 12px; color: #A8B4C8; font-weight: 600; }
+  input, select, textarea {
+    background: #141B2D; border: 1px solid #253050; border-radius: 6px;
+    color: var(--paper); font-family: var(--sans); font-size: 13px;
+    padding: 9px 12px; outline: none; transition: border-color 0.2s; width: 100%;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--accent); }
+  textarea { resize: vertical; min-height: 72px; line-height: 1.5; }
+  select option { background: #141B2D; }
+
+  .gen-btn {
+    background: var(--accent); color: #fff; border: none; border-radius: 8px;
+    padding: 12px 20px; font-family: var(--mono); font-size: 13px; font-weight: 600;
+    cursor: pointer; width: 100%; transition: all 0.2s; letter-spacing: 0.03em;
+  }
+  .gen-btn:hover:not(:disabled) { background: #0045CC; }
+  .gen-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .credit { font-size: 10px; color: #2A3550; text-align: center; font-family: var(--mono); }
+
+  main { display: flex; flex-direction: column; min-height: calc(100vh - 65px); }
+
+  .toolbar {
+    padding: 12px 24px; border-bottom: 1px solid #1E2740; display: flex;
+    align-items: center; gap: 10px; background: #080D1A; min-height: 48px;
+    position: sticky; top: 65px; z-index: 9;
+  }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: #2A3550; flex-shrink: 0; }
+  .dot.live { background: var(--green); box-shadow: 0 0 6px var(--green); }
+  .dot.spin { background: var(--warn); animation: blink 1s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .toolbar-label { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .toolbar-label span { color: var(--paper); }
+  .copy-btn {
+    margin-left: auto; background: transparent; border: 1px solid #253050;
+    border-radius: 6px; color: var(--muted); font-family: var(--mono); font-size: 11px;
+    padding: 4px 12px; cursor: pointer; transition: all 0.2s; display: none;
+  }
+  .copy-btn:hover { border-color: var(--green); color: var(--green); }
+  .copy-btn.show { display: block; }
+
+  .out { flex: 1; padding: 32px 36px; overflow-y: auto; }
+
+  .empty {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    height: 100%; gap: 14px; color: var(--muted); text-align: center; padding: 60px 20px;
+  }
+  .empty h2 { font-size: 18px; font-weight: 300; color: #4A5A80; }
+  .empty p  { font-size: 13px; max-width: 340px; line-height: 1.7; }
+  .empty-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; max-width: 440px; width: 100%; }
+  .empty-card { background: #0D1426; border: 1px solid #1E2740; border-radius: 8px; padding: 14px; text-align: left; }
+  .empty-card-title { font-size: 12px; font-weight: 600; color: #A8B4C8; margin-bottom: 4px; }
+  .empty-card-text  { font-size: 11px; color: var(--muted); line-height: 1.5; }
+
+  .loading { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100%; gap: 18px; }
+  .loading.show { display: flex; }
+  .ring { width: 40px; height: 40px; border: 2px solid #1E2740; border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .steps { display: flex; flex-direction: column; gap: 7px; }
+  .step { font-family: var(--mono); font-size: 11px; color: #2A3550; display: flex; align-items: center; gap: 8px; transition: color 0.3s; }
+  .step.active { color: var(--paper); }
+  .step.done   { color: var(--green); }
+
+  .report { display: none; }
+  .report.show { display: block; }
+
+  .r-head { border-bottom: 1px solid #1E2740; padding-bottom: 18px; margin-bottom: 24px; }
+  .r-eyebrow { font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; }
+  .r-title   { font-size: 22px; font-weight: 300; margin-bottom: 10px; }
+  .r-meta    { display: flex; gap: 18px; flex-wrap: wrap; }
+  .r-meta-item { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .r-meta-item span { color: #A8B4C8; }
+
+  .r-body { font-size: 14px; line-height: 1.8; color: #C8D4E8; }
+  .r-body h2 { font-size: 11px; font-family: var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin: 26px 0 10px; padding-bottom: 5px; border-bottom: 1px solid #1E2740; }
+  .r-body h3 { font-size: 13px; font-weight: 600; color: var(--paper); margin: 14px 0 5px; }
+  .r-body p  { margin-bottom: 10px; }
+  .r-body ul { margin: 6px 0 10px; padding-left: 0; list-style: none; }
+  .r-body ul li { padding: 4px 0 4px 18px; position: relative; font-size: 13px; }
+  .r-body ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-family: var(--mono); font-size: 11px; }
+  .r-body strong { color: var(--paper); font-weight: 600; }
+
+  .signal-box { background: #0D1A10; border: 1px solid #1A3520; border-left: 3px solid var(--green); padding: 12px 14px; margin: 14px 0; font-size: 13px; color: #A8C8B0; border-radius: 0 6px 6px 0; }
+  .signal-lbl { font-family: var(--mono); font-size: 10px; color: var(--green); letter-spacing: 0.1em; margin-bottom: 5px; }
+  .warn-box   { background: #1A0D08; border: 1px solid #352010; border-left: 3px solid var(--warn); padding: 12px 14px; margin: 14px 0; font-size: 13px; color: #C8A890; border-radius: 0 6px 6px 0; }
+  .warn-lbl   { font-family: var(--mono); font-size: 10px; color: var(--warn); letter-spacing: 0.1em; margin-bottom: 5px; }
+
+  .data-table { width: 100%; border-collapse: collapse; margin: 10px 0 18px; font-size: 12px; }
+  .data-table th { background: #141B2D; color: var(--muted); font-family: var(--mono); font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; padding: 7px 10px; text-align: left; border-bottom: 1px solid #253050; }
+  .data-table td { padding: 7px 10px; border-bottom: 1px solid #1A2240; color: #A8B4C8; vertical-align: top; }
+  .data-table tr:hover td { background: #111828; }
+
+  .disclaimer { margin-top: 36px; padding: 14px; background: #0D1426; border: 1px solid #1E2740; border-radius: 6px; font-size: 11px; color: #2A3550; font-family: var(--mono); line-height: 1.6; }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #1E2740; border-radius: 3px; }
+
+  @media (max-width: 700px) {
+    .shell { grid-template-columns: 1fr; }
+    aside { position: static; max-height: none; border-right: none; border-bottom: 1px solid #1E2740; }
+    .out { padding: 20px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Φ</div>
+  <div>
+    <div class="logo-text">PharmaSignal AI</div>
+    <div class="logo-sub">Intelligence Console · v2.0</div>
+  </div>
+  <div class="badge">SECURE · POWERED BY CLAUDE</div>
+</header>
+
+<div class="shell">
+
+  <aside>
+    <div>
+      <div class="sec-label">Report type</div>
+      <div class="type-grid" id="typeGrid">
+        <button class="type-btn active" data-type="safety">
+          <span class="ico">🔬</span>
+          <span class="tn">Safety Signal</span>
+          <span class="td">FAERS ADR analysis</span>
+        </button>
+        <button class="type-btn" data-type="pipeline">
+          <span class="ico">🧬</span>
+          <span class="tn">Pipeline CI</span>
+          <span class="td">Competitor pipeline</span>
+        </button>
+        <button class="type-btn" data-type="heor">
+          <span class="ico">📊</span>
+          <span class="tn">HEOR Brief</span>
+          <span class="td">Evidence dossier</span>
+        </button>
+        <button class="type-btn" data-type="regulatory">
+          <span class="ico">📋</span>
+          <span class="tn">Regulatory</span>
+          <span class="td">Dossier gap analysis</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Drug / Asset Name</label>
+      <input type="text" id="drug" placeholder="e.g. Trastuzumab Deruxtecan" />
+    </div>
+
+    <div class="field">
+      <label>Therapeutic Area</label>
+      <select id="therapy">
+        <option value="">Select area…</option>
+        <option>Oncology — Breast Cancer</option>
+        <option>Oncology — Lung Cancer</option>
+        <option>Oncology — ADC / Bispecific</option>
+        <option>Cardiovascular</option>
+        <option>Neurology</option>
+        <option>Rare Disease / Orphan</option>
+        <option>Immunology / Autoimmune</option>
+        <option>Metabolic / MASLD / NASH</option>
+        <option>Infectious Disease</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Client Context <span style="font-weight:300;color:var(--muted)">(optional)</span></label>
+      <textarea id="context" placeholder="e.g. Boutique CI firm tracking HER2-targeting ADCs…"></textarea>
+    </div>
+
+    <div class="field">
+      <label>Specific Questions <span style="font-weight:300;color:var(--muted)">(optional)</span></label>
+      <textarea id="questions" placeholder="e.g. How does ILD signal compare to T-DM1?"></textarea>
+    </div>
+
+    <button class="gen-btn" id="genBtn" onclick="generate()">▶ Generate Report</button>
+
+    <div class="credit">Built by Md Arkam · DPSRU M.Pharm · 2026</div>
+  </aside>
+
+  <main>
+    <div class="toolbar">
+      <div class="dot" id="dot"></div>
+      <div class="toolbar-label" id="toolbarLabel">Select report type and enter a drug name</div>
+      <button class="copy-btn" id="copyBtn" onclick="copyReport()">⎘ Copy Report</button>
+    </div>
+
+    <div class="out" id="out">
+
+      <div class="empty" id="emptyState">
+        <h2>Pharma Intelligence, On Demand</h2>
+        <p>Enter a drug name, pick a report type, and generate a professional intelligence brief in seconds.</p>
+        <div class="empty-grid">
+          <div class="empty-card">
+            <div class="empty-card-title">🔬 Safety Signal</div>
+            <div class="empty-card-text">FAERS ADR patterns, PRR/ROR scoring, toxicity benchmarking</div>
+          </div>
+          <div class="empty-card">
+            <div class="empty-card-title">🧬 Pipeline CI</div>
+            <div class="empty-card-text">Competitor assets, trial movements, regulatory filings</div>
+          </div>
+          <div class="empty-card">
+            <div class="empty-card-title">📊 HEOR Brief</div>
+            <div class="empty-card-text">Disease burden, evidence gaps, RWE opportunities</div>
+          </div>
+          <div class="empty-card">
+            <div class="empty-card-title">📋 Regulatory</div>
+            <div class="empty-card-text">CTD/CDSCO gap mapping, dossier completeness scoring</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="loading" id="loadingState">
+        <div class="ring"></div>
+        <div class="steps">
+          <div class="step" id="s1">○ &nbsp;Initialising intelligence engine</div>
+          <div class="step" id="s2">○ &nbsp;Analysing drug profile</div>
+          <div class="step" id="s3">○ &nbsp;Processing safety & evidence data</div>
+          <div class="step" id="s4">○ &nbsp;Generating structured report</div>
+          <div class="step" id="s5">○ &nbsp;Finalising intelligence brief</div>
+        </div>
+      </div>
+
+      <div class="report" id="reportOut"></div>
+
+    </div>
+  </main>
+
+</div>
+
+<script>
+  let activeType = 'safety';
+  let rawText = '';
+
+  document.querySelectorAll('.type-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.type-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeType = btn.dataset.type;
+    });
+  });
+
+  function buildPrompt(type, drug, therapy, context, questions) {
+    const date = new Date().toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'});
+    const ctx = context   ? '\nClient context: ' + context   : '';
+    const q   = questions ? '\nSpecific questions: ' + questions : '';
+    const base = `You are a senior pharmaceutical intelligence analyst. Generate a professional structured intelligence report.\nDate: ${date}\nDrug/Asset: ${drug}\nTherapeutic Area: ${therapy || 'Not specified'}${ctx}${q}\n\nFormatting:\n- ## for section headers\n- ### for sub-headers\n- **bold** for key terms\n- bullet lists with -\n- [SIGNAL] prefix for signal boxes\n- [WARNING] prefix for caution boxes\n- Pipe tables: | Col | Col |\n- Clinically precise, 700-900 words`;
+
+    const map = {
+      safety:     base + `\n\nSAFETY SIGNAL INTELLIGENCE REPORT sections:\n## EXECUTIVE SUMMARY\n## DRUG PROFILE & MECHANISM\n## ADR SIGNAL LANDSCAPE\nTable: | ADR Category | Signal Strength | Comparator Benchmark | Clinical Significance |\n## KEY SAFETY SIGNALS\n2-3 [SIGNAL] boxes\n## RISK-BENEFIT POSITIONING\n## COMPETITIVE SAFETY DIFFERENTIATION\n## REGULATORY IMPLICATIONS\n## STRATEGIC NOTES\nDisclaimer at end.`,
+      pipeline:   base + `\n\nCOMPETITIVE PIPELINE INTELLIGENCE sections:\n## EXECUTIVE SUMMARY\n## ASSET PROFILE\n## COMPETITIVE LANDSCAPE\nTable: | Asset | Company | Phase | Target | Differentiator |\n## PIPELINE MOVEMENT ANALYSIS\n## DEAL & PARTNERSHIP SIGNALS\n## REGULATORY FILING TRACKER\n## MARKET POSITIONING OUTLOOK\n## STRATEGIC RECOMMENDATIONS\nDisclaimer at end.`,
+      heor:       base + `\n\nHEOR EVIDENCE BRIEF sections:\n## EXECUTIVE SUMMARY\n## DISEASE BURDEN & EPIDEMIOLOGY\n## CURRENT STANDARD OF CARE\n## EVIDENCE GAP ANALYSIS\nTable: | Evidence Domain | Status | Gap | Priority |\n## ECONOMIC MODELLING FRAMEWORK\n## RWE OPPORTUNITIES\n## [WARNING] KEY UNCERTAINTIES\n## MARKET ACCESS IMPLICATIONS\n## EVIDENCE GENERATION ROADMAP\nDisclaimer at end.`,
+      regulatory: base + `\n\nREGULATORY DOSSIER GAP ANALYSIS sections:\n## EXECUTIVE SUMMARY\n## SUBMISSION PATHWAY OVERVIEW\n## CTD/ACTD DOSSIER ASSESSMENT\nTable: | CTD Module | Requirement | Status | Gap/Action |\n## CDSCO-SPECIFIC REQUIREMENTS\n## ICH GUIDELINE ALIGNMENT\n## [WARNING] CRITICAL GAPS\n## TIMELINE IMPLICATIONS\n## RECOMMENDED ACTION PLAN\nDisclaimer at end.`
+    };
+    return map[type];
+  }
+
+  function parseMarkdown(text) {
+    // Tables
+    text = text.replace(/\|(.+)\|\n\|[-| :]+\|\n((?:\|.+\|\n?)*)/g, (_, header, rows) => {
+      const ths = header.split('|').filter(c=>c.trim()).map(c=>`<th>${c.trim()}</th>`).join('');
+      const trs = rows.trim().split('\n').map(row => {
+        const tds = row.split('|').filter(c=>c.trim()).map(c=>`<td>${c.trim()}</td>`).join('');
+        return `<tr>${tds}</tr>`;
+      }).join('');
+      return `<table class="data-table"><thead><tr>${ths}</tr></thead><tbody>${trs}</tbody></table>`;
+    });
+    text = text.replace(/\[SIGNAL\]\s*([^\n]+(?:\n(?!\[)[^\n]*)*)/g, (_,c) =>
+      `<div class="signal-box"><div class="signal-lbl">⚡ SIGNAL DETECTED</div>${c.trim()}</div>`);
+    text = text.replace(/\[WARNING\]\s*([^\n]+(?:\n(?!\[)[^\n]*)*)/g, (_,c) =>
+      `<div class="warn-box"><div class="warn-lbl">⚠ CAUTION</div>${c.trim()}</div>`);
+    text = text.replace(/^## (.+)$/gm,  '<h2>$1</h2>');
+    text = text.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+    text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    text = text.replace(/^- (.+)$/gm, '<li>$1</li>');
+    text = text.replace(/(<li>.*<\/li>\n?)+/gs, m => `<ul>${m}</ul>`);
+    text = text.split('\n\n').map(p => {
+      p = p.trim();
+      if (!p) return '';
+      if (p.startsWith('<h') || p.startsWith('<ul') || p.startsWith('<table') || p.startsWith('<div')) return p;
+      return `<p>${p}</p>`;
+    }).join('\n');
+    return text;
+  }
+
+  function animateSteps() {
+    const ids = ['s1','s2','s3','s4','s5'];
+    const delays = [0, 700, 1600, 2700, 4000];
+    ids.forEach((id, i) => {
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.className = 'step active';
+        el.textContent = '● ' + el.textContent.slice(2);
+        if (i > 0) {
+          const prev = document.getElementById(ids[i-1]);
+          if (prev) { prev.className = 'step done'; prev.textContent = '✓ ' + prev.textContent.slice(2); }
+        }
+      }, delays[i]);
+    });
+  }
+
+  async function generate() {
+    const drug      = document.getElementById('drug').value.trim();
+    const therapy   = document.getElementById('therapy').value;
+    const context   = document.getElementById('context').value.trim();
+    const questions = document.getElementById('questions').value.trim();
+
+    if (!drug) { alert('Please enter a drug or asset name.'); return; }
+
+    const btn = document.getElementById('genBtn');
+    const dot = document.getElementById('dot');
+    btn.disabled = true;
+    btn.textContent = '⟳ Generating…';
+    dot.className = 'dot spin';
+
+    document.getElementById('emptyState').style.display = 'none';
+    document.getElementById('reportOut').className = 'report';
+    document.getElementById('loadingState').className = 'loading show';
+    document.getElementById('copyBtn').classList.remove('show');
+
+    ['s1','s2','s3','s4','s5'].forEach(id => {
+      const el = document.getElementById(id);
+      el.className = 'step';
+    });
+
+    const labels = { safety:'Safety Signal Intelligence', pipeline:'Competitive Pipeline CI', heor:'HEOR Evidence Brief', regulatory:'Regulatory Gap Analysis' };
+    document.getElementById('toolbarLabel').innerHTML = `Generating <span>${labels[activeType]} — ${drug}</span>`;
+
+    animateSteps();
+
+    try {
+      const response = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: buildPrompt(activeType, drug, therapy, context, questions) })
+      });
+
+      const data = await response.json();
+      if (data.error) throw new Error(data.error);
+      rawText = data.text || '';
+
+      setTimeout(() => {
+        const last = document.getElementById('s5');
+        last.className = 'step done';
+        last.textContent = '✓ ' + last.textContent.slice(2);
+      }, 5000);
+
+      setTimeout(() => {
+        document.getElementById('loadingState').className = 'loading';
+
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'});
+        const timeStr = now.toLocaleTimeString('en-GB', {hour:'2-digit',minute:'2-digit'});
+
+        document.getElementById('reportOut').innerHTML = `
+          <div class="r-head">
+            <div class="r-eyebrow">${labels[activeType]}</div>
+            <div class="r-title">${drug}${therapy ? ' · ' + therapy : ''}</div>
+            <div class="r-meta">
+              <div class="r-meta-item">Generated <span>${dateStr} at ${timeStr}</span></div>
+              <div class="r-meta-item">Engine <span>Claude Sonnet</span></div>
+              <div class="r-meta-item">Type <span>${labels[activeType]}</span></div>
+            </div>
+          </div>
+          <div class="r-body">${parseMarkdown(rawText)}</div>
+          <div class="disclaimer">
+            ⚠ INTELLIGENCE USE ONLY — AI-generated for strategic research purposes only.
+            Does not constitute medical advice, regulatory guidance, or investment recommendation.
+            Verify all data against primary sources before clinical or regulatory use.
+            PharmaSignal AI · Built by Md Arkam · DPSRU M.Pharm 2026
+          </div>`;
+
+        document.getElementById('reportOut').className = 'report show';
+        dot.className = 'dot live';
+        document.getElementById('toolbarLabel').innerHTML = `Report ready — <span>${drug} · ${labels[activeType]}</span>`;
+        document.getElementById('copyBtn').classList.add('show');
+        btn.disabled = false;
+        btn.textContent = '▶ Generate Report';
+      }, 5400);
+
+    } catch (err) {
+      document.getElementById('loadingState').className = 'loading';
+      document.getElementById('reportOut').innerHTML =
+        `<div class="warn-box"><div class="warn-lbl">⚠ ERROR</div>${err.message}</div>`;
+      document.getElementById('reportOut').className = 'report show';
+      dot.className = 'dot';
+      btn.disabled = false;
+      btn.textContent = '▶ Generate Report';
+    }
+  }
+
+  function copyReport() {
+    navigator.clipboard.writeText(rawText).then(() => {
+      const btn = document.getElementById('copyBtn');
+      btn.textContent = '✓ Copied';
+      setTimeout(() => { btn.textContent = '⎘ Copy Report'; }, 2000);
+    });
+  }
+</script>
+</body>
+</html>
