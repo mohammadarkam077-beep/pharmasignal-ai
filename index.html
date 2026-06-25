@@ -151,6 +151,9 @@
   .r-meta-item { font-family: var(--mono); font-size: 11px; color: var(--muted); }
   .r-meta-item span { color: #A8B4C8; }
 
+  .r-sources { margin-top: 10px; font-family: var(--mono); font-size: 10px; color: #5A6A90; padding: 7px 10px; background: #0D1426; border: 1px solid #1E2740; border-radius: 6px; display: inline-block; }
+  .r-sources span { color: var(--green); }
+
   .r-body { font-size: 14px; line-height: 1.8; color: #C8D4E8; }
   .r-body h2 { font-size: 11px; font-family: var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin: 26px 0 10px; padding-bottom: 5px; border-bottom: 1px solid #1E2740; }
   .r-body h3 { font-size: 13px; font-weight: 600; color: var(--paper); margin: 14px 0 5px; }
@@ -172,6 +175,74 @@
 
   .disclaimer { margin-top: 36px; padding: 14px; background: #0D1426; border: 1px solid #1E2740; border-radius: 6px; font-size: 11px; color: #2A3550; font-family: var(--mono); line-height: 1.6; }
 
+  .agg { margin-bottom: 28px; }
+  .agg-title { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #5A6A90; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .agg-title .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 5px var(--green); }
+  .agg-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; }
+  .agg-card { background: #0D1426; border: 1px solid #1E2740; border-radius: 8px; padding: 13px 14px; }
+  .agg-card.unavailable { opacity: 0.55; }
+  .agg-card-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .agg-card-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--accent); }
+  .agg-card-status { font-family: var(--mono); font-size: 9px; padding: 2px 7px; border-radius: 10px; border: 1px solid; }
+  .agg-card-status.ok { color: var(--green); border-color: var(--green); }
+  .agg-card-status.bad { color: var(--warn); border-color: var(--warn); }
+  .agg-item { font-size: 11.5px; color: #A8B4C8; padding: 5px 0; border-top: 1px solid #161E36; line-height: 1.5; }
+  .agg-item:first-of-type { border-top: none; }
+  .agg-item b { color: var(--paper); font-weight: 600; }
+  .agg-empty { font-size: 11px; color: #5A6A90; font-style: italic; }
+  .agg-toggle { background: none; border: none; color: #5A6A90; font-family: var(--mono); font-size: 10px; cursor: pointer; margin-bottom: 10px; padding: 0; }
+  .agg-toggle:hover { color: var(--accent); }
+  .agg-body.collapsed { display: none; }
+
+  .lr { margin-bottom: 28px; border: 1px solid #1E2740; border-radius: 10px; padding: 18px 18px 16px; background: linear-gradient(180deg, #0D1426 0%, #0A0F1F 100%); }
+  .lr-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
+  .lr-title { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #5A6A90; }
+  .lr-band { font-family: var(--mono); font-size: 13px; font-weight: 700; letter-spacing: 0.06em; padding: 5px 14px; border-radius: 20px; border: 1px solid; }
+  .lr-band.go { color: var(--green); border-color: var(--green); background: rgba(60,200,120,0.08); }
+  .lr-band.caution { color: #E8B339; border-color: #E8B339; background: rgba(232,179,57,0.08); }
+  .lr-band.nogo { color: var(--warn); border-color: var(--warn); background: rgba(232,80,80,0.08); }
+  .lr-band.unknown { color: #5A6A90; border-color: #5A6A90; }
+  .lr-overall { font-family: var(--mono); font-size: 26px; font-weight: 700; color: var(--paper); }
+  .lr-overall span { font-size: 13px; color: #5A6A90; font-weight: 400; }
+  .lr-grid { display: flex; flex-direction: column; gap: 10px; }
+  .lr-row { display: grid; grid-template-columns: 150px 1fr 46px; align-items: center; gap: 12px; }
+  .lr-row-label { font-size: 12px; color: #A8B4C8; font-weight: 600; }
+  .lr-bar-track { height: 8px; border-radius: 4px; background: #161E36; overflow: hidden; }
+  .lr-bar-fill { height: 100%; border-radius: 4px; }
+  .lr-bar-fill.hi { background: var(--green); }
+  .lr-bar-fill.mid { background: #E8B339; }
+  .lr-bar-fill.lo { background: var(--warn); }
+  .lr-bar-fill.na { background: #2A3550; }
+  .lr-row-score { font-family: var(--mono); font-size: 12px; text-align: right; color: var(--paper); }
+  .lr-row-score.na-text { color: #5A6A90; }
+  .lr-notes { margin-top: 14px; padding-top: 12px; border-top: 1px solid #161E36; }
+  .lr-note { font-size: 11px; color: #5A6A90; line-height: 1.6; padding: 3px 0; }
+  .lr-note b { color: #A8B4C8; }
+  .lr-coverage { font-family: var(--mono); font-size: 10px; color: #3A4768; margin-top: 10px; }
+
+  .counter-badge { margin-left: 10px; font-family: var(--mono); font-size: 10px; color: #A8B4C8; border: 1px solid #253050; padding: 3px 10px; border-radius: 20px; letter-spacing: 0.04em; white-space: nowrap; }
+  .counter-badge b { color: var(--accent); }
+
+  .metrics-box { background: #0D1426; border: 1px solid #1E2740; border-radius: 8px; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+  .metrics-row { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+  .metrics-num { font-family: var(--mono); font-size: 18px; font-weight: 700; color: var(--paper); }
+  .metrics-lbl { font-size: 10px; color: var(--muted); font-family: var(--mono); letter-spacing: 0.04em; }
+  .metrics-sub { font-size: 10px; color: #5A6A90; line-height: 1.5; }
+  .bench-toggle { background: none; border: none; color: var(--accent); font-family: var(--mono); font-size: 10px; cursor: pointer; padding: 0; text-align: left; }
+  .bench-detail { display: none; flex-direction: column; gap: 4px; padding-top: 6px; border-top: 1px solid #161E36; }
+  .bench-detail.show { display: flex; }
+  .bench-item { font-size: 10.5px; color: #A8B4C8; display: flex; justify-content: space-between; gap: 6px; }
+  .bench-item .ok { color: var(--green); }
+  .bench-item .bad { color: var(--warn); }
+
+  .fb-widget { margin-top: 16px; display: flex; align-items: center; gap: 12px; padding: 12px 14px; background: #0D1426; border: 1px solid #1E2740; border-radius: 8px; }
+  .fb-label { font-size: 11px; color: var(--muted); font-family: var(--mono); }
+  .fb-btn { background: #141B2D; border: 1px solid #253050; border-radius: 6px; color: var(--paper); font-size: 14px; padding: 5px 12px; cursor: pointer; transition: all 0.15s; }
+  .fb-btn:hover:not(:disabled) { border-color: var(--accent); }
+  .fb-btn:disabled { opacity: 0.5; cursor: default; }
+  .fb-tally { font-family: var(--mono); font-size: 10px; color: #5A6A90; margin-left: auto; }
+  .fb-thanks { font-size: 11px; color: var(--green); font-family: var(--mono); }
+
   ::-webkit-scrollbar { width: 5px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: #1E2740; border-radius: 3px; }
@@ -189,9 +260,10 @@
   <div class="logo">Φ</div>
   <div>
     <div class="logo-text">PharmaSignal AI</div>
-    <div class="logo-sub">Intelligence Console · v2.0</div>
+    <div class="logo-sub">Intelligence Console · v2.1</div>
   </div>
   <div class="badge">SECURE · POWERED BY CLAUDE</div>
+  <div class="counter-badge" id="counterBadge"><b>—</b>&nbsp;reports generated</div>
 </header>
 
 <div class="shell">
@@ -219,6 +291,11 @@
           <span class="ico">📋</span>
           <span class="tn">Regulatory</span>
           <span class="td">Dossier gap analysis</span>
+        </button>
+        <button class="type-btn" data-type="launch">
+          <span class="ico">🚀</span>
+          <span class="tn">Launch Readiness</span>
+          <span class="td">Go/No-Go scorecard</span>
         </button>
       </div>
     </div>
@@ -257,6 +334,13 @@
 
     <button class="gen-btn" id="genBtn" onclick="generate()">▶ Generate Report</button>
 
+    <div>
+      <div class="sec-label">Live metrics</div>
+      <div class="metrics-box" id="metricsBox">
+        <div class="metrics-sub">Loading…</div>
+      </div>
+    </div>
+
     <div class="credit">Built by Md Arkam · DPSRU M.Pharm · 2026</div>
   </aside>
 
@@ -271,7 +355,7 @@
 
       <div class="empty" id="emptyState">
         <h2>Pharma Intelligence, On Demand</h2>
-        <p>Enter a drug name, pick a report type, and generate a professional intelligence brief in seconds.</p>
+        <p>Enter a drug name, pick a report type, and get a brief that aggregates six live feeds — ClinicalTrials.gov, FAERS, Drugs@FDA, USPTO, PubMed, FDA Enforcement — and synthesizes them, not just one written from general knowledge.</p>
         <div class="empty-grid">
           <div class="empty-card">
             <div class="empty-card-title">🔬 Safety Signal</div>
@@ -296,8 +380,8 @@
         <div class="ring"></div>
         <div class="steps">
           <div class="step" id="s1">○ &nbsp;Initialising intelligence engine</div>
-          <div class="step" id="s2">○ &nbsp;Analysing drug profile</div>
-          <div class="step" id="s3">○ &nbsp;Processing safety & evidence data</div>
+          <div class="step" id="s2">○ &nbsp;Querying 6 live feeds: trials, FAERS, FDA, USPTO, PubMed, recalls</div>
+          <div class="step" id="s3">○ &nbsp;Synthesizing cross-source patterns</div>
           <div class="step" id="s4">○ &nbsp;Generating structured report</div>
           <div class="step" id="s5">○ &nbsp;Finalising intelligence brief</div>
         </div>
@@ -313,6 +397,89 @@
 <script>
   let activeType = 'safety';
   let rawText = '';
+  let lastFeedbackVote = null;
+
+  function fmtCount(n) { return (typeof n === 'number') ? n.toLocaleString() : '—'; }
+
+  function renderMetricsBox(m) {
+    const box = document.getElementById('metricsBox');
+    if (!box) return;
+    if (!m) {
+      box.innerHTML = `<div class="metrics-sub">Metrics service unavailable right now.</div>`;
+      return;
+    }
+    const b = m.benchmark || { items: [], checked: 0, matched: 0, summary: 'Benchmark unavailable.' };
+    const items = (b.items || []).map(it => {
+      const status = it.ok === null || it.ok === false
+        ? `<span class="bad">${it.error ? esc(it.error) : 'unavailable'}</span>`
+        : (it.match ? `<span class="ok">match ✓</span>` : `<span class="bad">mismatch ✗</span>`);
+      return `<div class="bench-item"><span>${esc(it.drug)} (${esc(it.applicationNumber)})</span>${status}</div>`;
+    }).join('');
+
+    box.innerHTML = `
+      <div class="metrics-row">
+        <div><div class="metrics-num">${fmtCount(m.reportCount)}</div><div class="metrics-lbl">REPORTS GENERATED</div></div>
+        <div style="text-align:right"><div class="metrics-num">${b.checked ? b.matched + '/' + b.checked : '—'}</div><div class="metrics-lbl">ACCURACY BENCHMARK</div></div>
+      </div>
+      <div class="metrics-sub">${esc(b.summary)}</div>
+      <button class="bench-toggle" id="benchToggle" onclick="document.getElementById('benchDetail').classList.toggle('show')">▸ Show pinned FDA records checked live</button>
+      <div class="bench-detail" id="benchDetail">${items}</div>
+      <div class="metrics-row" style="border-top:1px solid #161E36;padding-top:8px;">
+        <div class="metrics-sub">User feedback: 👍 ${fmtCount(m.feedback && m.feedback.up)} · 👎 ${fmtCount(m.feedback && m.feedback.down)}</div>
+      </div>`;
+  }
+
+  async function fetchMetrics() {
+    try {
+      const r = await fetch('/api/metrics');
+      const m = await r.json();
+      if (m.error) throw new Error(m.error);
+      renderMetricsBox(m);
+      const cb = document.getElementById('counterBadge');
+      if (cb) cb.innerHTML = `<b>${fmtCount(m.reportCount)}</b>&nbsp;reports generated`;
+      window.__lastMetrics = m;
+    } catch (e) {
+      renderMetricsBox(null);
+    }
+  }
+
+  async function submitFeedback(vote) {
+    if (lastFeedbackVote) return;
+    lastFeedbackVote = vote;
+    const widget = document.getElementById('fbWidget');
+    if (widget) {
+      widget.querySelectorAll('.fb-btn').forEach(b => b.disabled = true);
+    }
+    try {
+      const r = await fetch('/api/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ vote })
+      });
+      const data = await r.json();
+      const tallyEl = document.getElementById('fbTally');
+      if (tallyEl) tallyEl.textContent = `👍 ${fmtCount(data.up)} · 👎 ${fmtCount(data.down)}`;
+      const thanksEl = document.getElementById('fbThanks');
+      if (thanksEl) thanksEl.style.display = 'inline';
+    } catch (e) {
+      lastFeedbackVote = null;
+      if (widget) widget.querySelectorAll('.fb-btn').forEach(b => b.disabled = false);
+    }
+  }
+
+  function renderFeedbackWidget() {
+    lastFeedbackVote = null;
+    const m = window.__lastMetrics;
+    const initial = m && m.feedback ? `👍 ${fmtCount(m.feedback.up)} · 👎 ${fmtCount(m.feedback.down)}` : '—';
+    return `
+      <div class="fb-widget" id="fbWidget">
+        <div class="fb-label">Was this report useful?</div>
+        <button class="fb-btn" onclick="submitFeedback('up')">👍</button>
+        <button class="fb-btn" onclick="submitFeedback('down')">👎</button>
+        <span class="fb-thanks" id="fbThanks" style="display:none">Thanks for the feedback</span>
+        <span class="fb-tally" id="fbTally">${initial}</span>
+      </div>`;
+  }
 
   document.querySelectorAll('.type-btn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -332,7 +499,8 @@
       safety:     base + `\n\nSAFETY SIGNAL INTELLIGENCE REPORT sections:\n## EXECUTIVE SUMMARY\n## DRUG PROFILE & MECHANISM\n## ADR SIGNAL LANDSCAPE\nTable: | ADR Category | Signal Strength | Comparator Benchmark | Clinical Significance |\n## KEY SAFETY SIGNALS\n2-3 [SIGNAL] boxes\n## RISK-BENEFIT POSITIONING\n## COMPETITIVE SAFETY DIFFERENTIATION\n## REGULATORY IMPLICATIONS\n## STRATEGIC NOTES\nDisclaimer at end.`,
       pipeline:   base + `\n\nCOMPETITIVE PIPELINE INTELLIGENCE sections:\n## EXECUTIVE SUMMARY\n## ASSET PROFILE\n## COMPETITIVE LANDSCAPE\nTable: | Asset | Company | Phase | Target | Differentiator |\n## PIPELINE MOVEMENT ANALYSIS\n## DEAL & PARTNERSHIP SIGNALS\n## REGULATORY FILING TRACKER\n## MARKET POSITIONING OUTLOOK\n## STRATEGIC RECOMMENDATIONS\nDisclaimer at end.`,
       heor:       base + `\n\nHEOR EVIDENCE BRIEF sections:\n## EXECUTIVE SUMMARY\n## DISEASE BURDEN & EPIDEMIOLOGY\n## CURRENT STANDARD OF CARE\n## EVIDENCE GAP ANALYSIS\nTable: | Evidence Domain | Status | Gap | Priority |\n## ECONOMIC MODELLING FRAMEWORK\n## RWE OPPORTUNITIES\n## [WARNING] KEY UNCERTAINTIES\n## MARKET ACCESS IMPLICATIONS\n## EVIDENCE GENERATION ROADMAP\nDisclaimer at end.`,
-      regulatory: base + `\n\nREGULATORY DOSSIER GAP ANALYSIS sections:\n## EXECUTIVE SUMMARY\n## SUBMISSION PATHWAY OVERVIEW\n## CTD/ACTD DOSSIER ASSESSMENT\nTable: | CTD Module | Requirement | Status | Gap/Action |\n## CDSCO-SPECIFIC REQUIREMENTS\n## ICH GUIDELINE ALIGNMENT\n## [WARNING] CRITICAL GAPS\n## TIMELINE IMPLICATIONS\n## RECOMMENDED ACTION PLAN\nDisclaimer at end.`
+      regulatory: base + `\n\nREGULATORY DOSSIER GAP ANALYSIS sections:\n## EXECUTIVE SUMMARY\n## SUBMISSION PATHWAY OVERVIEW\n## CTD/ACTD DOSSIER ASSESSMENT\nTable: | CTD Module | Requirement | Status | Gap/Action |\n## CDSCO-SPECIFIC REQUIREMENTS\n## ICH GUIDELINE ALIGNMENT\n## [WARNING] CRITICAL GAPS\n## TIMELINE IMPLICATIONS\n## RECOMMENDED ACTION PLAN\nDisclaimer at end.`,
+      launch:     base + `\n\nLAUNCH READINESS REPORT sections:\nA pre-computed Launch Readiness Scorecard (six dimensions, 0-100 each, plus an overall GO / CAUTION / NO-GO band) will be provided to you in the data appendix above — it is already rendered visually for the user, so do NOT redraw it as a table. Instead, write around it:\n## EXECUTIVE SUMMARY — state the overall band and the single biggest swing factor\n## DIMENSION-BY-DIMENSION ANALYSIS — for each of the six scorecard dimensions, explain in 2-3 sentences why it scored as it did, citing the underlying feed\n## KEY BLOCKERS & RISKS — 2-4 [WARNING] boxes for the lowest-scoring dimensions\n## COMPETITIVE TIMING — how this asset's readiness compares to typical timelines for this class/indication\n## CROSS-SOURCE SYNTHESIS — connect at least two feeds to explain the overall trajectory\n## GO / NO-GO RECOMMENDATION — a direct, decisive call referencing the band, suitable for a launch committee\n## 90-DAY PRE-LAUNCH ACTION PLAN — prioritized, ties each action to the dimension it improves\nDisclaimer at end.`
     };
     return map[type];
   }
@@ -363,6 +531,105 @@
       return `<p>${p}</p>`;
     }).join('\n');
     return text;
+  }
+
+  function esc(s) { return (s ?? '').toString().replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  function renderAggregation(data) {
+    if (!data) return '';
+
+    const card = (label, ok, bodyHtml) => `
+      <div class="agg-card ${ok ? '' : 'unavailable'}">
+        <div class="agg-card-head">
+          <div class="agg-card-label">${esc(label)}</div>
+          <div class="agg-card-status ${ok ? 'ok' : 'bad'}">${ok ? 'LIVE' : 'UNAVAILABLE'}</div>
+        </div>
+        ${bodyHtml}
+      </div>`;
+
+    const ct = data.ct, faers = data.faers, fda = data.fda, patents = data.patents, pubmed = data.pubmed, enforcement = data.enforcement;
+
+    const ctBody = ct.ok
+      ? (ct.studies.length
+          ? ct.studies.slice(0,4).map(s => `<div class="agg-item"><b>${esc(s.nctId)}</b> — ${esc(s.status)} · Phase ${esc(s.phase)} · ${esc(s.sponsor || 'N/A')}</div>`).join('')
+          : `<div class="agg-empty">No trials found.</div>`)
+      : `<div class="agg-empty">${esc(ct.error)}</div>`;
+
+    const faersBody = faers.ok
+      ? (faers.reactions && faers.reactions.length
+          ? faers.reactions.slice(0,5).map(r => `<div class="agg-item"><b>${esc(r.term)}</b> — ${esc(r.count)} reports</div>`).join('')
+          : `<div class="agg-empty">${esc(faers.note || 'No reports found.')}</div>`)
+      : `<div class="agg-empty">${esc(faers.error)}</div>`;
+
+    const fdaBody = fda.ok
+      ? (fda.applications && fda.applications.length
+          ? fda.applications.slice(0,3).map(a => `<div class="agg-item"><b>App ${esc(a.applicationNumber)}</b> — ${esc(a.sponsor || 'N/A')}${a.products[0] ? ' · ' + esc(a.products[0].marketingStatus) : ''}</div>`).join('')
+          : `<div class="agg-empty">${esc(fda.note || 'No records found.')}</div>`)
+      : `<div class="agg-empty">${esc(fda.error)}</div>`;
+
+    const patentsBody = patents.ok
+      ? (patents.patents && patents.patents.length
+          ? patents.patents.slice(0,4).map(p => `<div class="agg-item"><b>${esc(p.id)}</b> — ${esc(p.title)} (${esc(p.date)})</div>`).join('')
+          : `<div class="agg-empty">No matching patents.</div>`)
+      : `<div class="agg-empty">${esc(patents.error)}</div>`;
+
+    const pubmedBody = pubmed.ok
+      ? (pubmed.papers && pubmed.papers.length
+          ? pubmed.papers.slice(0,4).map(p => `<div class="agg-item"><b>${esc(p.pubdate)}</b> — ${esc(p.title)}</div>`).join('')
+          : `<div class="agg-empty">${esc(pubmed.note || 'No articles found.')}</div>`)
+      : `<div class="agg-empty">${esc(pubmed.error)}</div>`;
+
+    const enforcementBody = enforcement.ok
+      ? (enforcement.recalls && enforcement.recalls.length
+          ? enforcement.recalls.slice(0,4).map(r => `<div class="agg-item"><b>Class ${esc(r.classification)}</b> — ${esc(r.reason)} (${esc(r.reportDate)})</div>`).join('')
+          : `<div class="agg-empty">${esc(enforcement.note || 'No recalls found.')}</div>`)
+      : `<div class="agg-empty">${esc(enforcement.error)}</div>`;
+
+    return `
+      <div class="agg">
+        <div class="agg-title"><span class="live-dot"></span> LIVE DATA AGGREGATION — 6 SOURCES</div>
+        <button class="agg-toggle" id="aggToggle" onclick="document.getElementById('aggBody').classList.toggle('collapsed'); this.textContent = this.textContent.startsWith('▾') ? '▸ Show raw feed data' : '▾ Hide raw feed data';">▾ Hide raw feed data</button>
+        <div class="agg-body" id="aggBody">
+          <div class="agg-grid">
+            ${card('ClinicalTrials.gov', ct.ok, ctBody)}
+            ${card('FAERS (openFDA)', faers.ok, faersBody)}
+            ${card('Drugs@FDA / Orange Book', fda.ok, fdaBody)}
+            ${card('USPTO (PatentsView)', patents.ok, patentsBody)}
+            ${card('PubMed', pubmed.ok, pubmedBody)}
+            ${card('FDA Enforcement', enforcement.ok, enforcementBody)}
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function renderLaunchScorecard(ls) {
+    if (!ls) return '';
+
+    const bandClass = ls.band === 'GO' ? 'go' : ls.band === 'CAUTION' ? 'caution' : ls.band === 'NO-GO' ? 'nogo' : 'unknown';
+    const barClass = (s) => s === null ? 'na' : s >= 75 ? 'hi' : s >= 55 ? 'mid' : 'lo';
+
+    const rows = ls.dims.map(d => `
+      <div class="lr-row">
+        <div class="lr-row-label">${esc(d.label)}</div>
+        <div class="lr-bar-track"><div class="lr-bar-fill ${barClass(d.score)}" style="width:${d.score === null ? 4 : d.score}%"></div></div>
+        <div class="lr-row-score ${d.score === null ? 'na-text' : ''}">${d.score === null ? 'N/A' : d.score}</div>
+      </div>`).join('');
+
+    const notes = ls.dims.map(d => `<div class="lr-note"><b>${esc(d.label)}:</b> ${esc(d.note)}</div>`).join('');
+
+    return `
+      <div class="lr">
+        <div class="lr-head">
+          <div>
+            <div class="lr-title">Launch Readiness Scorecard</div>
+            <div class="lr-overall">${ls.overall === null ? 'N/A' : ls.overall}<span>/100 overall</span></div>
+          </div>
+          <div class="lr-band ${bandClass}">${esc(ls.band)}</div>
+        </div>
+        <div class="lr-grid">${rows}</div>
+        <div class="lr-notes">${notes}</div>
+        <div class="lr-coverage">${esc(ls.coverage)} · scored deterministically from live feeds, not LLM judgment</div>
+      </div>`;
   }
 
   function animateSteps() {
@@ -406,21 +673,37 @@
       el.className = 'step';
     });
 
-    const labels = { safety:'Safety Signal Intelligence', pipeline:'Competitive Pipeline CI', heor:'HEOR Evidence Brief', regulatory:'Regulatory Gap Analysis' };
+    const labels = { safety:'Safety Signal Intelligence', pipeline:'Competitive Pipeline CI', heor:'HEOR Evidence Brief', regulatory:'Regulatory Gap Analysis', launch:'Launch Readiness Report' };
     document.getElementById('toolbarLabel').innerHTML = `Generating <span>${labels[activeType]} — ${drug}</span>`;
 
     animateSteps();
+
+    let sources = null;
+    let liveData = null;
+    let launchScore = null;
 
     try {
       const response = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: buildPrompt(activeType, drug, therapy, context, questions) })
+        body: JSON.stringify({
+          prompt: buildPrompt(activeType, drug, therapy, context, questions),
+          drug: drug,
+          reportType: activeType
+        })
       });
 
       const data = await response.json();
       if (data.error) throw new Error(data.error);
       rawText = data.text || '';
+      sources = data.sources || null;
+      liveData = data.data || null;
+      launchScore = data.launchScore || null;
+      if (typeof data.reportCount === 'number') {
+        const cb = document.getElementById('counterBadge');
+        if (cb) cb.innerHTML = `<b>${fmtCount(data.reportCount)}</b>&nbsp;reports generated`;
+        if (window.__lastMetrics) window.__lastMetrics.reportCount = data.reportCount;
+      }
 
       setTimeout(() => {
         const last = document.getElementById('s5');
@@ -444,14 +727,20 @@
               <div class="r-meta-item">Engine <span>Claude Sonnet</span></div>
               <div class="r-meta-item">Type <span>${labels[activeType]}</span></div>
             </div>
+            ${sources ? `<div class="r-sources">LIVE DATA: <span>${sources}</span></div>` : ''}
           </div>
+          ${renderLaunchScorecard(launchScore)}
+          ${renderAggregation(liveData)}
           <div class="r-body">${parseMarkdown(rawText)}</div>
           <div class="disclaimer">
             ⚠ INTELLIGENCE USE ONLY — AI-generated for strategic research purposes only.
-            Does not constitute medical advice, regulatory guidance, or investment recommendation.
+            Grounded where possible in six live feeds — ClinicalTrials.gov, FAERS, Drugs@FDA,
+            USPTO, PubMed, and FDA Enforcement — synthesized (not just generated) by Claude;
+            does not constitute medical advice, regulatory guidance, or investment recommendation.
             Verify all data against primary sources before clinical or regulatory use.
             PharmaSignal AI · Built by Md Arkam · DPSRU M.Pharm 2026
-          </div>`;
+          </div>
+          ${renderFeedbackWidget()}`;
 
         document.getElementById('reportOut').className = 'report show';
         dot.className = 'dot live';
@@ -479,6 +768,8 @@
       setTimeout(() => { btn.textContent = '⎘ Copy Report'; }, 2000);
     });
   }
+
+  fetchMetrics();
 </script>
 </body>
 </html>
